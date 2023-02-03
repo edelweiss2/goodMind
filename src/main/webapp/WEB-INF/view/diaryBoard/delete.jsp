@@ -9,7 +9,7 @@
     </style>
 </head>
 
-<body>
+<body> 
     <%@ include file="../common/top.jsp" %>
 
     <div class="container" style="margin-top: 80px;">
