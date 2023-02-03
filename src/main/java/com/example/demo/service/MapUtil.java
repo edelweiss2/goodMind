@@ -1,4 +1,4 @@
-package com.example.demo.map;
+package com.example.demo.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,11 +14,16 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+@Service
 public class MapUtil {
+	@Value("${naver.accessId}") private String accessId;
+	@Value("${naver.secretKey}") private String secretKey;
+	@Value("${roadAddrKey}") private String roadAddrKey;
+	
 	/**
 	 * 건물명으로부터 도로명 주소를 구해주는 메소드
 	 */
-	public String getRoadAddr(String keyword, String roadAddrKey) throws Exception {
+	public String getRoadAddr(String keyword) throws Exception {
 		int currentPage = 1;
 		int countPerPage = 10;
 		String resultType = "json";
@@ -55,7 +60,7 @@ public class MapUtil {
 	/**
 	 * 도로명주소로부터 경도, 위도 정보를 구해주는 메소드
 	 */
-	public List<String> getGeocode(String query, String accessId, String secretKey) throws Exception {
+	public List<String> getGeocode(String query) throws Exception {
 		String apiUrl = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode";
 		query = URLEncoder.encode(query, "utf-8");
 		apiUrl += "?query=" + query;
@@ -81,8 +86,6 @@ public class MapUtil {
 		
 		JSONParser parser = new JSONParser();
 		JSONObject object = (JSONObject) parser.parse(sb.toString());
-//		JSONArray addresses = (JSONArray) object.get("addresses");
-//		JSONObject address = (JSONObject) addresses.get(0);
 		JSONObject address = (JSONObject) ((JSONArray) object.get("addresses")).get(0);
 		String lng = (String) address.get("x");
 		String lat = (String) address.get("y");
@@ -91,4 +94,42 @@ public class MapUtil {
 		list.add(lng); list.add(lat);
 		return list;
 	}
+	
+	/**
+	 *  여러개 위치를 주면 그곳들의 좌표를 찾아 지도 API url을 반환하는 메소드
+	 */
+	public String getHotPlacesUrl(String[] places, int level) throws Exception {
+		List<List<String>> dataList = new ArrayList<>();
+		for (String place: places) {
+			if (place.equals("")) 
+				continue;
+			List<String> row = new ArrayList<>();
+			String roadAddr = getRoadAddr(place);
+			List<String> geocode = getGeocode(roadAddr);
+			row.add(place); row.add(roadAddr);
+			row.add(geocode.get(0)); row.add(geocode.get(1));
+			dataList.add(row);
+		}
+		
+		String marker = "";
+		double lngSum = 0.0, latSum = 0.0;
+		for (List<String> list: dataList) {
+			double lng = Double.parseDouble(list.get(2));
+			double lat = Double.parseDouble(list.get(3));
+			lngSum += lng; latSum += lat;
+			marker += "&markers=type:t|size:tiny|pos:" + lng + "%20" + lat + "|label:"
+					+ URLEncoder.encode(list.get(0), "utf-8") + "|color:red";
+		}
+		double lngCenter = lngSum / dataList.size();
+		double latCenter = latSum / dataList.size();
+		String url = "https://naveropenapi.apigw.ntruss.com/map-static/v2/raster"
+				+ "?w=" + 600 + "&h=" + 400
+				+ "&center=" + lngCenter + "," + latCenter
+				+ "&level=" + level + "&scale=" + 2
+				+ "&X-NCP-APIGW-API-KEY-ID=" + accessId
+				+ "&X-NCP-APIGW-API-KEY=" + secretKey;
+		
+		return url + marker;
+	}
+	
 }

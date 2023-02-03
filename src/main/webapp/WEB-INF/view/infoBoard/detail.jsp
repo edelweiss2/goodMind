@@ -23,21 +23,21 @@
             <div class="col-sm-9">
                 <h3><strong>게시글 상세 조회</strong>
                 	<span style="font-size: 0.6em;">
-                        <a href="/goodM/InfoBoard/list?p=${currentInfoBoardPage}&f=&q=" class="ms-5"><i class="fas fa-list-ul"></i> 목록</a>
+                        <a href="/goodM/infoBoard/list?p=${currentInfoBoardPage}&f=&q=" class="ms-5"><i class="fas fa-list-ul"></i> 목록</a>
                     
                     <!-- 본인만 수정 가능 -->
-                    <c:if test="${info_board.uid eq uid}">
-                        <a href="/goodM/InfoBoard/update?bid=${info_board.infoBid}" class="ms-3"><i class="far fa-edit"></i> 수정</a>
+                    <c:if test="${infoBoard.uid eq uid}">
+                        <a href="/goodM/infoBoard/update?infoBid=${infoBoard.infoBid}" class="ms-3"><i class="far fa-edit"></i> 수정</a>
                     </c:if>
-                    <c:if test="${info_board.uid ne uid}">
+                    <c:if test="${infoBoard.uid ne uid}">
                         <a href="#" class="ms-3 disabled-link"><i class="far fa-edit"></i> 수정</a>  
                     </c:if>
                     
                     <!-- 본인만 삭제 가능 -->
-                    <c:if test="${info_board.uid eq uid}">
-                        <a href="/goodM/InfoBoard/delete?bid=${info_board.infoBid}" class="ms-3"><i class="fas fa-trash-alt"></i> 삭제</a>
+                    <c:if test="${infoBoard.uid eq uid}">
+                        <a href="/goodM/infoBoard/delete?infoBid=${infoBoard.infoBid}" class="ms-3"><i class="fas fa-trash-alt"></i> 삭제</a>
                     </c:if>
-                    <c:if test="${info_board.uid ne uid}">
+                    <c:if test="${infoBoard.uid ne uid}">
                         <a href="#" class="ms-3 disabled-link"><i class="fas fa-trash-alt"></i> 삭제</a>
                     </c:if>
                     </span>
@@ -45,8 +45,8 @@
                 <hr>
                 <div class="row">
                     <div class="col-8">
-                        <h5>${info_board.title}</h5>
-                        <h6>글 번호: ${info_board.infoBid} | ${fn:replace(info_board.modTime, 'T', ' ')}</h6>
+                        <h5>${infoBoard.title}</h5>
+                        <h6>글 번호: ${infoBoard.infoBid} | ${fn:replace(infoBoard.modTime, 'T', ' ')}</h6>
                         <h6>첨부 파일: 
                         <c:forEach var="file" items="${fileList}">
                         	<a href="/goodM/file/download?file=${file}" class="me-2" download>${file}</a>
@@ -54,14 +54,15 @@
                         </h6>
                     </div>
                     <div class="col-4 text-end">
-                        <h5>${info_board.uname}</h5>
-                        <h6>조회 ${info_board.viewCount}</h6>
+                        <h5>${infoBoard.uname}</h5>
+                        <h6>조회 ${infoBoard.viewCount}</h6>
                     </div>
 
                     <div class="col-12"><hr></div>
-                    <div class="col-12">
-                        ${fn:replace(info_board.content, newline, '<br>')}
+                    <div class="col-12" style="height: 500px">
+                        ${fn:replace(infoBoard.content, newline, '<br>')}
                     </div>
+                    <hr>
                 </div>
 
             </div>

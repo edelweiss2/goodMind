@@ -23,18 +23,18 @@
             	<h3><strong>게시글 수정</strong></h3>
             	<hr>
                 <div class="row">
-		            <form action="/goodM/InfoBoard/update" method="post" enctype="multipart/form-data">
-		            	<input type="hidden" name="infoBid" value="${info_board.infoBid}">
-		            	<input type="hidden" name="uid" value="${info_board.uid}">
+		            <form action="/goodM/infoBoard/update" method="post" enctype="multipart/form-data">
+		            	<input type="hidden" name="infoBid" value="${infoBoard.infoBid}">
+		            	<input type="hidden" name="uid" value="${infoBoard.uid}">
 		                <table class="table table-borderless">
 		                    <tr class="d-flex">
 		                        <td class="col-1"><label for="title">제목</label></td>
-		                        <td class="col-11" colspan="2"><input class="form-control" type="text" name="title" id="title" value="${info_board.title}"></td>
+		                        <td class="col-11" colspan="2"><input class="form-control" type="text" name="title" id="title" value="${infoBoard.title}"></td>
 		                    </tr>
 		                    <tr class="d-flex">
 		                        <td class="col-1"><label for="content">내용</label></td>
 		                        <td class="col-11" colspan="2">
-		                        	<textarea class="form-control" name="content" id="content" rows="10">${info_board.content}</textarea>
+		                        	<textarea class="form-control" name="content" id="content" rows="10">${infoBoard.content}</textarea>
 		                        </td>
 		                    </tr>
 		                    <tr class="d-flex">

@@ -28,8 +28,8 @@
 			                    <strong class="card-title">정말로 삭제하시겠습니까?</strong>
 			                    <p class="card-text text-center">
 			                        <br>
-			                        <button class="btn btn-primary" onclick="location.href='/goodM/GenBoard/deleteConfirm?bid=${genBid}'">삭제</button>
-			                        <button class="btn btn-secondary" onclick="location.href='/goodM/GenBoard/list?p=${currentGenBoardPage}&f=&q='">취소</button>
+			                        <button class="btn btn-primary" onclick="location.href='/goodM/genBoard/deleteConfirm?genBid=${genBid}'">삭제</button>
+			                        <button class="btn btn-secondary" onclick="location.href='/goodM/genBoard/list?p=${currentGenBoardPage}&f=&q='">취소</button>
 			                    </p>
 			                </div>
 			            </div>			            

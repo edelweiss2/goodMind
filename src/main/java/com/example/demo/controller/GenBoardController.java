@@ -34,10 +34,10 @@ import com.example.demo.service.GenBoardService;
 import com.example.demo.service.JSONUtil;
 
 @Controller
-@RequestMapping("/goodM/GenBoard")
+@RequestMapping("/goodM/genBoard")
 public class GenBoardController {
 
-	@Autowired private GenBoardService GenBoardService;
+	@Autowired private GenBoardService genBoardService;
 	@Value("${spring.servlet.multipart.location}") private String uploadDir;
 	
 	@GetMapping("/list")
@@ -49,14 +49,14 @@ public class GenBoardController {
 		int page = (page_ == null || page_.equals("")) ? 1 : Integer.parseInt(page_);
 		field = (field == null || field.equals("")) ? "title" : field;
 		query = (query == null || query.equals("")) ? "" : query;
-		List<GenBoard> list = GenBoardService.getGenBoardList(page, field, query);
+		List<GenBoard> list = genBoardService.getGenBoardList(page, field, query);
 		
 		HttpSession session = req.getSession();
 		session.setAttribute("currentGenBoardPage", page);
 		model.addAttribute("field", field);
 		model.addAttribute("query", query);
 		
-		int totalGenBoardNo = GenBoardService.getGenBoardCount("genBid", "");
+		int totalGenBoardNo = genBoardService.getGenBoardCount("genBid", "");
 		int totalPages = (int) Math.ceil(totalGenBoardNo / 10.);
 		
 		int startPage = (int)(Math.ceil((page-0.5)/10) - 1) * 10 + 1;
@@ -71,8 +71,8 @@ public class GenBoardController {
 		
 		String today = LocalDate.now().toString(); // 2022-12-28
 		model.addAttribute("today", today);
-		model.addAttribute("GenBoardList", list);
-		return "GenBoard/list";
+		model.addAttribute("genBoardList", list);
+		return "genBoard/list";
 	}
 
 	@GetMapping("/detail")
@@ -82,12 +82,12 @@ public class GenBoardController {
 		String option = req.getParameter("option");
 		HttpSession session = req.getSession();
 		String sessionUid = (String) session.getAttribute("uid");
-		
+
 		// 조회수 증가. 단, 본인이 읽거나 댓글 작성후에는 제외.
 		if (option == null && (!uid.equals(sessionUid))) 
-			GenBoardService.increaseViewCount(genBid);
-		
-		GenBoard genBoard = GenBoardService.getGenBoard(genBid);
+			genBoardService.increaseViewCount(genBid);
+
+		GenBoard genBoard = genBoardService.getGenBoard(genBid);
 		String jsonFiles = genBoard.getFiles();
 		if (!(jsonFiles == null || jsonFiles.equals(""))) {
 			JSONUtil json = new JSONUtil();
@@ -95,10 +95,9 @@ public class GenBoardController {
 			model.addAttribute("fileList", fileList);
 		}
 		model.addAttribute("genBoard", genBoard);
-		List<Reply> replyList = GenBoardService.getReplyList(genBid);
+		List<Reply> replyList = genBoardService.getReplyList(genBid);
 		model.addAttribute("replyList", replyList);
-		
-		return "GenBoard/detail";
+		return "genBoard/detail";
 	}
 	
 	@PostMapping("/reply")
@@ -113,14 +112,14 @@ public class GenBoardController {
 		int isMine = (uid.equals(sessionUid)) ? 1 : 0;
 		
 		Reply reply = new Reply(content, isMine, sessionUid, genBid);
-		GenBoardService.insertReply(reply);
-		GenBoardService.increaseReplyCount(genBid);
-		return "redirect:/goodM/GenBoard/detail?genBid=" + genBid + "&uid=" + uid + "&option=DNI";	// Do Not Increase
+		genBoardService.insertReply(reply);
+		genBoardService.increaseReplyCount(genBid);
+		return "redirect:/goodM/genBoard/detail?genBid=" + genBid + "&uid=" + uid + "&option=DNI";	// Do Not Increase
 	}
 	
 	@GetMapping("/write")
 	public String write() {
-		return "GenBoard/write";
+		return "genBoard/write";
 	}
 	
 	@PostMapping("/write")
@@ -143,15 +142,15 @@ public class GenBoardController {
 		}
 		JSONUtil json = new JSONUtil();
 		String files = json.stringify(list);
-		GenBoard GenBoard = new GenBoard(uid, title, content, files); 
-		GenBoardService.insertGenBoard(GenBoard);
-		return "redirect:/goodM/GenBoard/list?p=1&f=&q=";
+		GenBoard genBoard = new GenBoard(uid, title, content, files); 
+		genBoardService.insertGenBoard(genBoard);
+		return "redirect:/goodM/genBoard/list?p=1&f=&q=";
 	}
 	
 	@GetMapping("/update")
 	public String updateForm(HttpServletRequest req, Model model) {
 		int genBid = Integer.parseInt(req.getParameter("genBid"));
-		GenBoard genBoard = GenBoardService.getGenBoard(genBid);
+		GenBoard genBoard = genBoardService.getGenBoard(genBid);
 		HttpSession session = req.getSession();
 		
 		String jsonFiles = genBoard.getFiles();
@@ -161,7 +160,7 @@ public class GenBoardController {
 			session.setAttribute("fileList", fileList);
 		}
 		model.addAttribute("genBoard", genBoard);
-		return "GenBoard/update";
+		return "genBoard/update";
 	}
 	
 	@PostMapping("/update")
@@ -208,48 +207,25 @@ public class GenBoardController {
 		JSONUtil json = new JSONUtil();
 		String files = json.stringify(newAdditionalFileList);
 		GenBoard genBoard = new GenBoard(genBid, title, content, files);
-		GenBoardService.updateGenBoard(genBoard);
+		genBoardService.updateGenBoard(genBoard);
 		
-		return "redirect:/goodM/GenBoard/detail?genBid=" + genBid + "&uid=" + uid + "&option=DNI";
+		return "redirect:/goodM/genBoard/detail?genBid=" + genBid + "&uid=" + uid + "&option=DNI";
 	}
 	
 	@GetMapping("/delete")
 	public String delete(HttpServletRequest req, Model model) {
 		int genBid = Integer.parseInt(req.getParameter("genBid"));
 		model.addAttribute("genBid", genBid);
-		return "GenBoard/delete";
+		return "genBoard/delete";
 	}
 	
 	@GetMapping("/deleteConfirm")
 	public String deleteConfirm(HttpServletRequest req) {
 		int genBid = Integer.parseInt(req.getParameter("genBid"));
-		GenBoardService.deleteGenBoard(genBid);
+		genBoardService.deleteGenBoard(genBid);
 		
 		HttpSession session = req.getSession();
-		return "redirect:/goodM/GenBoard/list?p=" + session.getAttribute("currentGenBoardPage") + "&f=&q=";
-	}
-	
-	/* 아래의 코드는 과거 데이터와의 호환성 때문에 남겨둠 */
-
-	@GetMapping("/download")
-	public ResponseEntity<Resource> download(HttpServletRequest req) {
-		String fileName = req.getParameter("file");
-		Path path = Paths.get(uploadDir + "/" + fileName);
-		try {
-			String contentType = Files.probeContentType(path);
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentDisposition(
-				ContentDisposition.builder("attachment")
-					.filename(fileName, StandardCharsets.UTF_8)
-					.build()
-			);
-			headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-			Resource resource = new InputStreamResource(Files.newInputStream(path));
-			return new ResponseEntity<>(resource, headers, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		return "redirect:/goodM/genBoard/list?p=" + session.getAttribute("currentGenBoardPage") + "&f=&q=";
 	}
 	
 }

@@ -14,7 +14,7 @@ import com.example.demo.entity.Reply;
 public class GenBoardServiceImpl implements GenBoardService {
 
 	@Autowired
-	private GenBoardDao GenBoardDao;
+	private GenBoardDao genBoardDao;
 	
 	@Autowired
 	private ReplyDao replyDao;
@@ -23,48 +23,48 @@ public class GenBoardServiceImpl implements GenBoardService {
 	public List<GenBoard> getGenBoardList(int page, String field, String query) {
 		int offset = (page - 1) * 10;
 		query = "%"+query+"%";
-		List<GenBoard> list = GenBoardDao.getGenBoardList(offset, field, query);
+		List<GenBoard> list = genBoardDao.getGenBoardList(offset, field, query);
 		return list;
 	}
 
 	@Override
 	public GenBoard getGenBoard(int genBid) {
-		GenBoard genBoard = GenBoardDao.getGenBoard(genBid);
+		GenBoard genBoard = genBoardDao.getGenBoard(genBid);
 		return genBoard;
 	}
 
 	@Override
 	public void insertGenBoard(GenBoard genBoard) {
-		GenBoardDao.insertGenBoard(genBoard);
+		genBoardDao.insertGenBoard(genBoard);
 	}
 
 	@Override
 	public void updateGenBoard(GenBoard genBoard) {
-		GenBoardDao.updateGenBoard(genBoard);
+		genBoardDao.updateGenBoard(genBoard);
 	}
 
 	@Override
 	public void deleteGenBoard(int genBid) {
-		GenBoardDao.deleteGenBoard(genBid);
+		genBoardDao.deleteGenBoard(genBid);
 	}
 
 	@Override
 	public int getGenBoardCount(String field, String query) {
 		query = "%"+query+"%";
-		int count = GenBoardDao.getGenBoardCount(field, query);
+		int count = genBoardDao.getGenBoardCount(field, query);
 		return count;
 	}
 
 	@Override
 	public void increaseViewCount(int genBid) {
 		String field = "viewCount";
-		GenBoardDao.increaseCount(genBid, field);
+		genBoardDao.increaseCount(genBid, field);
 	}
 
 	@Override
 	public void increaseReplyCount(int genBid) {
 		String field = "replyCount";
-		GenBoardDao.increaseCount(genBid, field);
+		genBoardDao.increaseCount(genBid, field);
 	}
 
 	@Override

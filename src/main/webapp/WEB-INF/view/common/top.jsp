@@ -9,16 +9,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/goodM/user/home"><i class="fa-solid fa-house"></i> Home</a>
                 </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link ${menu eq 'GenBoard' ? "active" : ''}" href="/goodM/GenBoard/list?p=1&f=&q="><i class="far fa-list-alt"></i> 자유게시판</a>
-                </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link ${menu eq 'InfoBoard' ? "active" : ''}" href="/goodM/InfoBoard/list?p=1&f=&q="><i class="far fa-list-alt"></i> 마음에 Good! 게시판</a>
-                </li>
+				<li class="nav-item dropdown ms-3"><!-- 수정대상이나 예시로 일단 남겨둠 -->
+					<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+						<i class="far fa-list-alt"></i>게시판
+					</a>
+                <ul class="dropdown-menu">
+	                <li>
+	                    <a class="dropdown-item" href="/goodM/infoBoard/list?p=1&f=&q="> 마음에 Good!</a>
+	                </li>
+	                <li>
+	                    <a class="dropdown-item" href="/goodM/genBoard/list?p=1&f=&q="> 자유게시판</a>
+	                </li>
+                </ul>
+				<li class="nav-item ms-3">
+					<a class="nav-link ${menu eq 'diaBoard' ? "active" : ''}" href="/goodM/diaBoard/list?p=1&f=&q="><i class="fa-solid fa-book"></i> 기분기록 or 마음일기</a>
+				</li>
                 <li class="nav-item ms-3">
                     <a class="nav-link ${menu eq 'user' ? "active" : ''}" href="/goodM/user/list/1"><i class="fas fa-user-friends"></i> My page</a>
                 </li>
-                <li class="nav-item dropdown ms-3"><!-- 수정대상이나 예시로 일단 남겨둠 -->
+<%--                 <li class="nav-item dropdown ms-3"><!-- 수정대상이나 예시로 일단 남겨둠 -->
 	                <a class="nav-link dropdown-toggle ${(menu eq 'api') ? "active" : ''}" href="#" data-bs-toggle="dropdown">
 	                    <i class="fa-solid fa-cloud-arrow-down"></i> API's(수정대상)
 	                </a>
@@ -31,7 +40,7 @@
 	                    <li><a class="dropdown-item" href="/api/pose">Pose Estimation</a></li>
 	                    <li><a class="dropdown-item" href="/api/speechRecog">음성 인식</a></li>
 	                </ul>
-	            </li>
+	            </li> --%>
 
                 <li class="nav-item ms-3">
                     <a class="nav-link" href="/goodM/user/logout"><i class="fas fa-sign-out-alt"></i> 로그아웃</a>

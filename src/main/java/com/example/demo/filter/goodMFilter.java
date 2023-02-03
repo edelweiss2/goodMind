@@ -27,16 +27,18 @@ public class goodMFilter extends HttpFilter implements Filter {
 		
 		String uri = httpRequest.getRequestURI();
 //		System.out.println("BbsFilter.uri:" + uri);
-		if (uri.contains("GenBoard"))
-			session.setAttribute("menu", "GenBoard");
-		else if (uri.contains("InfoBoard"))
-			session.setAttribute("menu", "InfoBoard");
+		if (uri.contains("infoBoard"))
+			session.setAttribute("menu", "infoBoard");
+		else if (uri.contains("genBoard"))
+			session.setAttribute("menu", "genBoard");
+		else if (uri.contains("diaBoard"))
+			session.setAttribute("menu", "diaBoard");	
 		else if (uri.contains("user"))
 			session.setAttribute("menu", "user");
 		else
 			session.setAttribute("menu", "");
 		
-		String[] urlPatterns = {"/GenBoard", "/InfoBoard", "/user/list", "/user/update", "/user/delete"};
+		String[] urlPatterns = {"/infoBoard", "/genBoard", "/diaBoard" "/user/list", "/user/update", "/user/delete"};
 		for (String routing: urlPatterns) {
 			if (uri.contains(routing)) {
 				String uid = (String) session.getAttribute("uid");

@@ -13,7 +13,7 @@ import com.example.demo.entity.GenBoard;
 public interface GenBoardDao {
 
 	@Select("SELECT b.genBid, b.uid, b.title, b.modTime, "
-			+ "	b.viewCount, b.replyCount, u.uname FROM general_board AS b"
+			+ "	b.viewCount, b.replyCount, u.uname FROM genBoard AS b"
 			+ "	JOIN users AS u"
 			+ "	ON b.uid=u.uid"
 			+ "	WHERE b.isDeleted=0 AND ${field} LIKE #{query}"
@@ -21,31 +21,31 @@ public interface GenBoardDao {
 			+ "	LIMIT 10 OFFSET #{offset}")
 	public List<GenBoard> getGenBoardList(int offset, String field, String query);
 
-	@Select("SELECT COUNT(genBid) FROM general_board AS b"
+	@Select("SELECT COUNT(genBid) FROM genBoard AS b"
 			+ "	JOIN users AS u"
 			+ "	ON b.uid=u.uid"
 			+ "	WHERE b.isDeleted=0 AND ${field} LIKE #{query}")
 	public int getGenBoardCount(String field, String query);
 	
 	@Select("SELECT b.genBid, b.uid, b.title, b.content, b.modTime, b.viewCount,"
-			+ "	b.replyCount, b.files, u.uname FROM general_board AS b"
+			+ "	b.replyCount, b.files, u.uname FROM genBoard AS b"
 			+ "	JOIN users AS u"
 			+ "	ON b.uid=u.uid"
 			+ "	WHERE b.genBid=#{genBid}")
 	public GenBoard getGenBoard(int genBid);
 	
-	@Update("UPDATE general_board SET ${field}=${field}+1 WHERE genBid=#{genBid}")
+	@Update("UPDATE genBoard SET ${field}=${field}+1 WHERE genBid=#{genBid}")
 	public void increaseCount(int genBid, String field);
 
-	@Insert("INSERT INTO general_board VALUES(DEFAULT, #{uid}, #{title}, #{content},"
+	@Insert("INSERT INTO genBoard VALUES(DEFAULT, #{uid}, #{title}, #{content},"
 			+ " DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{files})")
 	public void insertGenBoard(GenBoard genBoard);
 
-	@Update("UPDATE general_board SET title=#{title}, content=#{content}, "
+	@Update("UPDATE genBoard SET title=#{title}, content=#{content}, "
 			+ " modTime=NOW(), files=#{files} WHERE genBid=#{genBid}")
 	public void updateGenBoard(GenBoard genBoard);
 
-	@Update("UPDATE general_board SET isDeleted=1 WHERE genBid=#{genBid}")
+	@Update("UPDATE genBoard SET isDeleted=1 WHERE genBid=#{genBid}")
 	public void deleteGenBoard(int genBid);
 	
 }

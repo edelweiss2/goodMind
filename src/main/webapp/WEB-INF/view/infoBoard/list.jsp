@@ -14,7 +14,7 @@
     		const field = document.getElementById("field").value;
     		const query = document.getElementById("query").value;
     		console.log("search()", field, query);
-    		location.href = "/goodM/GenBoard/list?p=${currentGenBoardPage}&f=" + field + "&q=" + query;
+    		location.href = "/goodM/infoBoard/list?p=${currentInfoBoardPage}&f=" + field + "&q=" + query;
     	}
     </script>
 </head>
@@ -31,9 +31,9 @@
                 <table class="table table-sm table-borderless">
                     <tr class="d-flex">
                         <td class="col-6" style="text-align: left;">
-                            <h3><strong>게시글 목록</strong>
+                            <h3><strong>마음에 Good! 목록</strong>
                                 <span style="font-size: 0.6em;">
-                                    <a href="/goodM/GenBoard/write" class="ms-5"><i class="far fa-file-alt"></i> 글쓰기</a>
+                                    <a href="/goodM/infoBoard/write" class="ms-5"><i class="far fa-file-alt"></i> 글쓰기</a>
                                 </span>
                             </h3>
                         </td>
@@ -54,50 +54,47 @@
                 </table>
                 <hr>
                 <table class="table mt-2">
-                    <tr class="table-secondary ">
+                    <tr class="table-secondary">
                         <th class="col-1">번호</th>
                         <th class="col-6">제목</th>
                         <th class="col-2">글쓴이</th>
                         <th class="col-2">날짜/시간</th>
                         <th class="col-1">조회수</th>
                     </tr>
-                <c:forEach var="genBoard" items="${GenBoardList}">
+                <c:forEach var="info_board" items="${infoBoardList}">
                     <tr>
-                        <td>${general_board.genBid}</td>
+                        <td>${info_board.infoBid}</td>
                         <td>
-                        	<a href="/goodM/genBoard/detail?genBid=${general_board.genBid}&uid=${general_board.uid}">${general_board.title}
-                        	<c:if test="${general_board.replyCount ge 1}">
-                            	<span class="text-danger">[${general_board.replyCount}]</span>
-                            </c:if>
+                        	<a href="/goodM/infoBoard/detail?infoBid=${info_board.infoBid}&uid=${info_board.uid}">${info_board.title}
                             </a>
                         </td>
-                        <td>${general_board.uname}</td>
+                        <td>${info_board.uname}</td>
                         <td>
-                        <c:if test="${today eq fn:substring(general_board.modTime, 0, 10)}">
-                        	${fn:substring(general_board.modTime, 11, 19)}
+                        <c:if test="${today eq fn:substring(info_board.modTime, 0, 10)}">
+                        	${fn:substring(info_board.modTime, 11, 19)}
                         </c:if>
-                        <c:if test="${not (today eq fn:substring(general_board.modTime, 0, 10))}">
-                        	${fn:substring(general_board.modTime, 0, 10)}
+                        <c:if test="${not (today eq fn:substring(info_board.modTime, 0, 10))}">
+                        	${fn:substring(info_board.modTime, 0, 10)}
                         </c:if>
                         </td>
-                        <td>${general_board.viewCount}</td>
+                        <td>${info_board.viewCount}</td>
                     </tr>
                 </c:forEach>    
                 </table>
                 <ul class="pagination justify-content-center mt-4">
-                <c:if test="${currentGenBoardPage gt 10}">
-                    <li class="page-item"><a class="page-link" href="/goodM/GenBoard/list?p=${startPage - 1}&f=${field}&q=${query}">&laquo;</a></li>
+                <c:if test="${currentInfoBoardPage gt 10}">
+                    <li class="page-item"><a class="page-link" href="/goodM/infoBoard/list?p=${startPage - 1}&f=${field}&q=${query}">&laquo;</a></li>
                 </c:if>
-                <c:if test="${currentGenBoardPage le 10}">
+                <c:if test="${currentInfoBoardPage le 10}">
                     <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
                 </c:if>
                 <c:forEach var="page" items="${pageList}" varStatus="loop">    
-                    <li class="page-item ${(currentGenBoardPage eq page) ? 'active' : ''}">
-                    	<a class="page-link" href="/goodM/GenBoard/list?p=${page}&f=${field}&q=${query}">${page}</a>
+                    <li class="page-item ${(currentInfoBoardPage eq page) ? 'active' : ''}">
+                    	<a class="page-link" href="/goodM/infoBoard/list?p=${page}&f=${field}&q=${query}">${page}</a>
                     </li>
                 </c:forEach>  
                 <c:if test="${totalPages gt endPage}">                    
-                    <li class="page-item"><a class="page-link" href="/goodM/GenBoard/list?p=${endPage + 1}&f=${field}&q=${query}">&raquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="/goodM/infoBoard/list?p=${endPage + 1}&f=${field}&q=${query}">&raquo;</a></li>
                 </c:if>
                 <c:if test="${totalPages le endPage}">                    
                     <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>

@@ -22,7 +22,7 @@
             	<h3><strong>게시글 쓰기</strong></h3>
             	<hr>
                 <div class="row">
-		            <form action="/goodM/InfoBoard/write" method="post" enctype="multipart/form-data">
+		            <form action="/goodM/infoBoard/write" method="post" enctype="multipart/form-data">
 		            	<input type="hidden" name="uid" value="${uid}">
 		                <table class="table table-borderless">
 		                    <tr class="d-flex">

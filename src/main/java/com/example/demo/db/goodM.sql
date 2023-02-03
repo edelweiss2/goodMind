@@ -2,13 +2,13 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
-DROP TABLE IF EXISTS diary_board;
-DROP TABLE IF EXISTS like_list;
+DROP TABLE IF EXISTS diaBoard;
+DROP TABLE IF EXISTS likeList;
 DROP TABLE IF EXISTS reply;
-DROP TABLE IF EXISTS general_board;
-DROP TABLE IF EXISTS info_board;
+DROP TABLE IF EXISTS genBoard;
+DROP TABLE IF EXISTS infoBoard;
 DROP TABLE IF EXISTS map;
-DROP TABLE IF EXISTS test_result;
+DROP TABLE IF EXISTS testResult;
 DROP TABLE IF EXISTS users;
 
 
@@ -16,26 +16,26 @@ DROP TABLE IF EXISTS users;
 
 /* Create Tables */
 
-CREATE TABLE diary_board
+CREATE TABLE diaBoard
 (
 	did int NOT NULL AUTO_INCREMENT,
 	uid varchar(20) NOT NULL,
 	title varchar(128) NOT NULL,
 	content varchar(128),
-	modtime datetime NOT NULL,
-	isDeleted int NOT NULL,
+	modTime datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	isDeleted int DEFAULT 0 NOT NULL,
 	files varchar(100),
 	PRIMARY KEY (did)
 );
 
 
-CREATE TABLE general_board
+CREATE TABLE genBoard
 (
 	genBid int NOT NULL AUTO_INCREMENT,
 	uid varchar(20) NOT NULL,
 	title varchar(128) NOT NULL,
 	content varchar(128),
-	modtime datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	modTime datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	viewCount int DEFAULT 0 NOT NULL,
 	replyCount int DEFAULT 0 NOT NULL,
 	isDeleted int DEFAULT 0 NOT NULL,
@@ -44,13 +44,13 @@ CREATE TABLE general_board
 );
 
 
-CREATE TABLE info_board
+CREATE TABLE infoBoard
 (
 	infoBid int NOT NULL AUTO_INCREMENT,
 	uid varchar(20) NOT NULL,
 	title varchar(128) NOT NULL,
 	content varchar(128),
-	modtime datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	modTime datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	viewCount int DEFAULT 0 NOT NULL,
 	isDeleted int DEFAULT 0 NOT NULL,
 	files varchar(100),
@@ -58,7 +58,7 @@ CREATE TABLE info_board
 );
 
 
-CREATE TABLE like_list
+CREATE TABLE likeList
 (
 	likeCount int DEFAULT 0 NOT NULL,
 	uid varchar(20) NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE reply
 );
 
 
-CREATE TABLE test_result
+CREATE TABLE testResult
 (
 	uid varchar(20) NOT NULL,
 	result varchar(200) NOT NULL
@@ -113,9 +113,9 @@ CREATE TABLE users
 
 /* Create Foreign Keys */
 
-ALTER TABLE like_list
+ALTER TABLE likeList
 	ADD FOREIGN KEY (genBid)
-	REFERENCES general_board (genBid)
+	REFERENCES genBoard (genBid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
@@ -123,21 +123,21 @@ ALTER TABLE like_list
 
 ALTER TABLE reply
 	ADD FOREIGN KEY (genBid)
-	REFERENCES general_board (genBid)
+	REFERENCES genBoard (genBid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
-ALTER TABLE like_list
+ALTER TABLE likeList
 	ADD FOREIGN KEY (infoBid)
-	REFERENCES info_board (infoBid)
+	REFERENCES infoBoard (infoBid)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
 
 
-ALTER TABLE diary_board
+ALTER TABLE diaBoard
 	ADD FOREIGN KEY (uid)
 	REFERENCES users (uid)
 	ON UPDATE RESTRICT
@@ -145,7 +145,7 @@ ALTER TABLE diary_board
 ;
 
 
-ALTER TABLE general_board
+ALTER TABLE genBoard
 	ADD FOREIGN KEY (uid)
 	REFERENCES users (uid)
 	ON UPDATE RESTRICT
@@ -153,7 +153,15 @@ ALTER TABLE general_board
 ;
 
 
-ALTER TABLE like_list
+ALTER TABLE infoBoard
+	ADD FOREIGN KEY (uid)
+	REFERENCES users (uid)
+	ON UPDATE RESTRICT
+	ON DELETE RESTRICT
+;
+
+
+ALTER TABLE likeList
 	ADD FOREIGN KEY (uid)
 	REFERENCES users (uid)
 	ON UPDATE RESTRICT
@@ -169,7 +177,7 @@ ALTER TABLE reply
 ;
 
 
-ALTER TABLE test_result
+ALTER TABLE testResult
 	ADD FOREIGN KEY (uid)
 	REFERENCES users (uid)
 	ON UPDATE RESTRICT

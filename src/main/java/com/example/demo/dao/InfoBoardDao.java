@@ -13,7 +13,7 @@ import com.example.demo.entity.InfoBoard;
 public interface InfoBoardDao {
 
 	@Select("SELECT b.infoBid, b.uid, b.title, b.modTime, "
-			+ "	b.viewCount, u.uname FROM info_board AS b"
+			+ "	b.viewCount, u.uname FROM infoBoard AS b"
 			+ "	JOIN users AS u"
 			+ "	ON b.uid=u.uid"
 			+ "	WHERE b.isDeleted=0 AND ${field} LIKE #{query}"
@@ -21,31 +21,31 @@ public interface InfoBoardDao {
 			+ "	LIMIT 10 OFFSET #{offset}")
 	public List<InfoBoard> getInfoBoardList(int offset, String field, String query);
 
-	@Select("SELECT COUNT(infoBid) FROM info_board AS b"
+	@Select("SELECT COUNT(infoBid) FROM infoBoard AS b"
 			+ "	JOIN users AS u"
 			+ "	ON b.uid=u.uid"
 			+ "	WHERE b.isDeleted=0 AND ${field} LIKE #{query}")
 	public int getInfoBoardCount(String field, String query);
 	
 	@Select("SELECT b.infoBid, b.uid, b.title, b.content, b.modTime, b.viewCount,"
-			+ "	b.files, u.uname FROM info_board AS b"
+			+ "	b.files, u.uname FROM infoBoard AS b"
 			+ "	JOIN users AS u"
 			+ "	ON b.uid=u.uid"
 			+ "	WHERE b.infoBid=#{infoBid}")
 	public InfoBoard getInfoBoard(int infoBid);
 	
-	@Update("UPDATE info_board SET ${field}=${field}+1 WHERE infoBid=#{infoBid}")
+	@Update("UPDATE infoBoard SET ${field}=${field}+1 WHERE infoBid=#{infoBid}")
 	public void increaseCount(int infoBid, String field);
 
-	@Insert("INSERT INTO info_board VALUES(DEFAULT, #{uid}, #{title}, #{content},"
-			+ " DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{files})")
+	@Insert("INSERT INTO infoBoard VALUES(DEFAULT, #{uid}, #{title}, #{content},"
+			+ " DEFAULT, DEFAULT, DEFAULT, #{files})")
 	public void insertInfoBoard(InfoBoard infoBoard);
 
-	@Update("UPDATE info_board SET title=#{title}, content=#{content}, "
+	@Update("UPDATE infoBoard SET title=#{title}, content=#{content}, "
 			+ " modTime=NOW(), files=#{files} WHERE infoBid=#{infoBid}")
 	public void updateInfoBoard(InfoBoard infoBoard);
 
-	@Update("UPDATE info_board SET isDeleted=1 WHERE infoBid=#{infoBid}")
+	@Update("UPDATE infoBoard SET isDeleted=1 WHERE infoBid=#{infoBid}")
 	public void deleteInfoBoard(int infoBid);
 	
 }

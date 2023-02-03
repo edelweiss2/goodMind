@@ -12,6 +12,7 @@ public class GenBoard {
 	private int replyCount;
 	private int isDeleted;
 	private String files;
+	private String uname;
 
 	
 	public GenBoard() {}
@@ -32,9 +33,8 @@ public class GenBoard {
 		this.content = content;
 		this.files = files;
 	}
-
 	public GenBoard(int genBid, String uid, String title, String content, LocalDateTime modTime, int viewCount,
-			int replyCount, int isDeleted, String files) {
+			int replyCount, int isDeleted, String files, String uname) {
 		super();
 		this.genBid = genBid;
 		this.uid = uid;
@@ -45,6 +45,7 @@ public class GenBoard {
 		this.replyCount = replyCount;
 		this.isDeleted = isDeleted;
 		this.files = files;
+		this.uname = uname;
 	}
 	public int getGenBid() {
 		return genBid;
@@ -99,6 +100,12 @@ public class GenBoard {
 	}
 	public void setFiles(String files) {
 		this.files = files;
+	}
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
 	}
 	
 }

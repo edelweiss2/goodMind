@@ -12,48 +12,48 @@ import com.example.demo.entity.InfoBoard;
 public class InfoBoardServiceImpl implements InfoBoardService {
 
 	@Autowired
-	private InfoBoardDao InfoBoardDao;
+	private InfoBoardDao infoBoardDao;
 	
 	@Override
 	public List<InfoBoard> getInfoBoardList(int page, String field, String query) {
 		int offset = (page - 1) * 10;
 		query = "%"+query+"%";
-		List<InfoBoard> list = InfoBoardDao.getInfoBoardList(offset, field, query);
+		List<InfoBoard> list = infoBoardDao.getInfoBoardList(offset, field, query);
 		return list;
 	}
 
 	@Override
 	public InfoBoard getInfoBoard(int infoBid) {
-		InfoBoard infoBoard = InfoBoardDao.getInfoBoard(infoBid);
+		InfoBoard infoBoard = infoBoardDao.getInfoBoard(infoBid);
 		return infoBoard;
 	}
 
 	@Override
 	public void insertInfoBoard(InfoBoard infoBoard) {
-		InfoBoardDao.insertInfoBoard(infoBoard);
+		infoBoardDao.insertInfoBoard(infoBoard);
 	}
 
 	@Override
 	public void updateInfoBoard(InfoBoard infoBoard) {
-		InfoBoardDao.updateInfoBoard(infoBoard);
+		infoBoardDao.updateInfoBoard(infoBoard);
 	}
 
 	@Override
 	public void deleteInfoBoard(int infoBid) {
-		InfoBoardDao.deleteInfoBoard(infoBid);
+		infoBoardDao.deleteInfoBoard(infoBid);
 	}
 
 	@Override
 	public int getInfoBoardCount(String field, String query) {
 		query = "%"+query+"%";
-		int count = InfoBoardDao.getInfoBoardCount(field, query);
+		int count = infoBoardDao.getInfoBoardCount(field, query);
 		return count;
 	}
 
 	@Override
 	public void increaseViewCount(int infoBid) {
 		String field = "viewCount";
-		InfoBoardDao.increaseCount(infoBid, field);
+		infoBoardDao.increaseCount(infoBid, field);
 	}
 
 }

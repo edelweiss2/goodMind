@@ -13,7 +13,7 @@ public interface GenBoardService {
 	
 	public void insertGenBoard(GenBoard genBoard);
 	
-	public void updateGenBoard(GenBoard genBboard);
+	public void updateGenBoard(GenBoard genBoard);
 	
 	public void deleteGenBoard(int genBid);
 	

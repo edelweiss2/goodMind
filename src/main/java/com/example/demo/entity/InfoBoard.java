@@ -11,6 +11,7 @@ public class InfoBoard {
 	private int viewCount;
 	private int isDeleted;
 	private String files;
+	private String uname;
 
 	public InfoBoard() {}
 	// 게시글 생성시 필요한 생성자
@@ -30,9 +31,8 @@ public class InfoBoard {
 		this.content = content;
 		this.files = files;
 	}
-	
 	public InfoBoard(int infoBid, String uid, String title, String content, LocalDateTime modTime, int viewCount,
-			int isDeleted, String files) {
+			int isDeleted, String files, String uname) {
 		super();
 		this.infoBid = infoBid;
 		this.uid = uid;
@@ -42,6 +42,7 @@ public class InfoBoard {
 		this.viewCount = viewCount;
 		this.isDeleted = isDeleted;
 		this.files = files;
+		this.uname = uname;
 	}
 	public int getInfoBid() {
 		return infoBid;
@@ -91,5 +92,11 @@ public class InfoBoard {
 	public void setFiles(String files) {
 		this.files = files;
 	}
-
+	public String getUname() {
+		return uname;
+	}
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
+	
 }

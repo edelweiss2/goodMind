@@ -33,10 +33,10 @@ import com.example.demo.service.InfoBoardService;
 import com.example.demo.service.JSONUtil;
 
 @Controller
-@RequestMapping("/goodM/InfoBoard")
+@RequestMapping("/goodM/infoBoard")
 public class InfoBoardController {
 
-	@Autowired private InfoBoardService InfoBoardService;
+	@Autowired private InfoBoardService infoBoardService;
 	@Value("${spring.servlet.multipart.location}") private String uploadDir;
 	
 	@GetMapping("/list")
@@ -48,14 +48,14 @@ public class InfoBoardController {
 		int page = (page_ == null || page_.equals("")) ? 1 : Integer.parseInt(page_);
 		field = (field == null || field.equals("")) ? "title" : field;
 		query = (query == null || query.equals("")) ? "" : query;
-		List<InfoBoard> list = InfoBoardService.getInfoBoardList(page, field, query);
+		List<InfoBoard> list = infoBoardService.getInfoBoardList(page, field, query);
 		
 		HttpSession session = req.getSession();
 		session.setAttribute("currentInfoBoardPage", page);
 		model.addAttribute("field", field);
 		model.addAttribute("query", query);
 		
-		int totalInfoBoardNo = InfoBoardService.getInfoBoardCount("infoBid", "");
+		int totalInfoBoardNo = infoBoardService.getInfoBoardCount("infoBid", "");
 		int totalPages = (int) Math.ceil(totalInfoBoardNo / 10.);
 		
 		int startPage = (int)(Math.ceil((page-0.5)/10) - 1) * 10 + 1;
@@ -70,8 +70,8 @@ public class InfoBoardController {
 		
 		String today = LocalDate.now().toString(); // 2022-12-28
 		model.addAttribute("today", today);
-		model.addAttribute("InfoBoardList", list);
-		return "InfoBoard/list";
+		model.addAttribute("infoBoardList", list);
+		return "infoBoard/list";
 	}
 
 	@GetMapping("/detail")
@@ -84,9 +84,9 @@ public class InfoBoardController {
 		
 		// 조회수 증가. 단, 본인이 읽거나 댓글 작성후에는 제외.
 		if (option == null && (!uid.equals(sessionUid))) 
-			InfoBoardService.increaseViewCount(infoBid);
+			infoBoardService.increaseViewCount(infoBid);
 		
-		InfoBoard infoBoard = InfoBoardService.getInfoBoard(infoBid);
+		InfoBoard infoBoard = infoBoardService.getInfoBoard(infoBid);
 		String jsonFiles = infoBoard.getFiles();
 		if (!(jsonFiles == null || jsonFiles.equals(""))) {
 			JSONUtil json = new JSONUtil();
@@ -95,12 +95,12 @@ public class InfoBoardController {
 		}
 		model.addAttribute("infoBoard", infoBoard);
 		
-		return "InfoBoard/detail";
+		return "infoBoard/detail";
 	}
 
 	@GetMapping("/write")
 	public String write() {
-		return "InfoBoard/write";
+		return "infoBoard/write";
 	}
 	
 	@PostMapping("/write")
@@ -124,14 +124,14 @@ public class InfoBoardController {
 		JSONUtil json = new JSONUtil();
 		String files = json.stringify(list);
 		InfoBoard infoBoard = new InfoBoard(uid, title, content, files); 
-		InfoBoardService.insertInfoBoard(infoBoard);
-		return "redirect:/goodM/InfoBoard/list?p=1&f=&q=";
+		infoBoardService.insertInfoBoard(infoBoard);
+		return "redirect:/goodM/infoBoard/list?p=1&f=&q=";
 	}
 	
 	@GetMapping("/update")
 	public String updateForm(HttpServletRequest req, Model model) {
 		int infoBid = Integer.parseInt(req.getParameter("infoBid"));
-		InfoBoard infoBoard = InfoBoardService.getInfoBoard(infoBid);
+		InfoBoard infoBoard = infoBoardService.getInfoBoard(infoBid);
 		HttpSession session = req.getSession();
 		
 		String jsonFiles = infoBoard.getFiles();
@@ -141,7 +141,7 @@ public class InfoBoardController {
 			session.setAttribute("fileList", fileList);
 		}
 		model.addAttribute("infoBoard", infoBoard);
-		return "board/update";
+		return "infoBoard/update";
 	}
 	
 	@PostMapping("/update")
@@ -188,48 +188,25 @@ public class InfoBoardController {
 		JSONUtil json = new JSONUtil();
 		String files = json.stringify(newAdditionalFileList);
 		InfoBoard infoBoard = new InfoBoard(infoBid, title, content, files);
-		InfoBoardService.updateInfoBoard(infoBoard);
+		infoBoardService.updateInfoBoard(infoBoard);
 		
-		return "redirect:/goodM/InfoBoard/detail?infoBid=" + infoBid + "&uid=" + uid + "&option=DNI";
+		return "redirect:/goodM/infoBoard/detail?infoBid=" + infoBid + "&uid=" + uid + "&option=DNI";
 	}
 	
 	@GetMapping("/delete")
 	public String delete(HttpServletRequest req, Model model) {
 		int infoBid = Integer.parseInt(req.getParameter("infoBid"));
 		model.addAttribute("infoBid", infoBid);
-		return "InfoBoard/delete";
+		return "infoBoard/delete";
 	}
 	
 	@GetMapping("/deleteConfirm")
 	public String deleteConfirm(HttpServletRequest req) {
 		int infoBid = Integer.parseInt(req.getParameter("infoBid"));
-		InfoBoardService.deleteInfoBoard(infoBid);
+		infoBoardService.deleteInfoBoard(infoBid);
 		
 		HttpSession session = req.getSession();
-		return "redirect:/goodM/InfoBoard/list?p=" + session.getAttribute("currentInfoBoardPage") + "&f=&q=";
-	}
-	
-	/* 아래의 코드는 과거 데이터와의 호환성 때문에 남겨둠 */
-
-	@GetMapping("/download")
-	public ResponseEntity<Resource> download(HttpServletRequest req) {
-		String fileName = req.getParameter("file");
-		Path path = Paths.get(uploadDir + "/" + fileName);
-		try {
-			String contentType = Files.probeContentType(path);
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentDisposition(
-				ContentDisposition.builder("attachment")
-					.filename(fileName, StandardCharsets.UTF_8)
-					.build()
-			);
-			headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-			Resource resource = new InputStreamResource(Files.newInputStream(path));
-			return new ResponseEntity<>(resource, headers, HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
+		return "redirect:/goodM/infoBoard/list?p=" + session.getAttribute("currentInfoBoardPage") + "&f=&q=";
 	}
 	
 }
