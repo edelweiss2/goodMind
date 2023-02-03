@@ -22,7 +22,7 @@
 	                </li>
                 </ul>
 				<li class="nav-item ms-3">
-					<a class="nav-link ${menu eq 'diaBoard' ? "active" : ''}" href="/goodM/diaBoard/list?p=1&f=&q="><i class="fa-solid fa-book"></i> 기분기록 or 마음일기</a>
+					<a class="nav-link ${menu eq 'diaryBoard' ? "active" : ''}" href="/goodM/diaryBoard/list?p=1&f=&q="><i class="fa-solid fa-book"></i> 기분기록 or 마음일기</a>
 				</li>
                 <li class="nav-item ms-3">
                     <a class="nav-link ${menu eq 'user' ? "active" : ''}" href="/goodM/user/list/1"><i class="fas fa-user-friends"></i> My page</a>
