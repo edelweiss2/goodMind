@@ -1,5 +1,5 @@
 package com.example.demo.controller;
-  
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -32,7 +32,7 @@ public class AsideController {
 	@Autowired private MapUtil mapUtil;
 	@Value("${weatherKey}") private String weatherKey;
 	@Value("${spring.servlet.multipart.location}") private String uploadDir;
-	
+
 	@ResponseBody
 	@PostMapping("/profile")
 	public String profile(MultipartFile profile, HttpServletRequest req) throws Exception {
@@ -41,13 +41,13 @@ public class AsideController {
 		String fname = profile.getOriginalFilename();
 		File profileFile = new File(uploadDir + "/" + fname);
 		profile.transferTo(profileFile);
-		
+
 		String newFname = imageUtil.squareImage(fname);
 		HttpSession session = req.getSession();
 		session.setAttribute("sessionProfile", newFname);
 		return newFname;
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/stateMsg")
 	public String stateMsg(HttpServletRequest req) {
@@ -56,7 +56,7 @@ public class AsideController {
 		session.setAttribute("sessionStateMsg", msg);
 		return "0";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/address")
 	public String addressChange(HttpServletRequest req) {
@@ -65,7 +65,7 @@ public class AsideController {
 		session.setAttribute("sessionAddress", addr);
 		return "0";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/weather")
 	public String weather(String addr) throws Exception {
@@ -74,20 +74,20 @@ public class AsideController {
 		List<String> geocode = mapUtil.getGeocode(roadAddr);
 		String lat = geocode.get(1);
 		String lon = geocode.get(0);
-		String apiUrl = "https://api.openweathermap.org/data/2.5/weather" 
+		String apiUrl = "https://api.openweathermap.org/data/2.5/weather"
 					+ "?lat=" + lat + "&lon=" + lon + "&units=metric"
 					+ "&appid=" + weatherKey + "&lang=kr";
-		
+
 		URL url = new URL(apiUrl);
 		BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(), "utf-8"));
 		StringBuffer sb = new StringBuffer();
 		String line = null;
-		
+
 		while((line = br.readLine()) != null)
 			sb.append(line);
 		br.close();
 //		System.out.println(sb.toString());
-		
+
 		JSONParser parser = new JSONParser();
 		JSONObject object = (JSONObject) parser.parse(sb.toString());
 		JSONObject weather = (JSONObject) ((JSONArray) object.get("weather")).get(0);
@@ -97,7 +97,7 @@ public class AsideController {
 		JSONObject main = (JSONObject) object.get("main");
 		Double temp_ = (Double) main.get("temp");
 		String temp = String.format("%.1f", temp_);
-		
+
 //		String html = "<img src=\"" + iconUrl + "\" height=\"16\" class=\"me-2\">"
 		String html = "<img src=\"" + iconUrl + "\" height=\"28\"> "
 					+ desc + ", 온도: " + temp + "&#8451";
