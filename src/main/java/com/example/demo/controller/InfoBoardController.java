@@ -162,7 +162,7 @@ public class InfoBoardController {
 		String content = (String) req.getParameter("content");
 		
 		HttpSession session = req.getSession();
-		List<String> additionalFileList = (List<String>) session.getAttribute("fileList");
+		List<String> additionalFileList = (List<String>)session.getAttribute("fileList");
 		String[] delFileList = req.getParameterValues("delFile");
 		if (delFileList != null) {
 			for (String delName: delFileList) {

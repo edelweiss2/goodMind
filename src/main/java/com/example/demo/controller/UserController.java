@@ -204,7 +204,6 @@ public class UserController {
 	@GetMapping("/deleteConfirm/{uid}")
 	public String deleteConfirm(@PathVariable String uid, HttpServletRequest req) {
 		userService.deleteUser(uid);
-		HttpSession session = req.getSession();
 		return "redirect:/goodM/user/logout/";
 	}
 
@@ -218,7 +217,6 @@ public class UserController {
 	@GetMapping("/deleteUserConfirm/{uid}")
 	public String deleteUserConfirm(@PathVariable String uid, HttpServletRequest req) {
 		userService.deleteUser(uid);
-		HttpSession session = req.getSession();
 		return "redirect:/goodM/user/logout/";
 	}
 		

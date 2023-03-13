@@ -5,22 +5,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.entity.DiaryBoard;
 import com.example.demo.entity.DiaryDay;
-import com.example.demo.entity.Schedule;
 import com.example.demo.service.AnniversaryService;
 import com.example.demo.service.DiaryService;
 import com.example.demo.service.SchedUtil;
@@ -30,7 +24,6 @@ import com.example.demo.service.SchedUtil;
 public class CalendarController {
 	
 	@Autowired private SchedUtil schedUtil;
-	@Autowired private AnniversaryService annivService;
 	@Autowired private DiaryService diaryService;
 	
 	@GetMapping(value = {"/calendar/{arrow}", "/calendar"})
