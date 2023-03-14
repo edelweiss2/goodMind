@@ -20,7 +20,6 @@ public class ChatController {
 	@GetMapping("/gibuni")
 	public String gibuni(String result) {
 		result = chatbotService.main("");
-		System.out.println("위");
 		return "chat/gibuni";
 	}
 	

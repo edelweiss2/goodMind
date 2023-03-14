@@ -6,10 +6,11 @@
 		</button>
 		<p>------<br>Quick<br>Menu<br>▼</p>
 		<a class="nav-link" href="/goodM/user/main"><i class="fa-solid fa-house"></i></a>
-		<a class="nav-link ${menu eq 'calendar' ? "active" : ''}" href="/goodM/calendar/calendar"><i class="fa-solid fa-calendar-days"></i></a>
-		<a class="nav-link ${menu eq 'map' ? "active" : ''}" href="/goodM/map/kakaoMap"><i class="fa-solid fa-map-location-dot"></i></a>
-		<a class="nav-link ${menu eq 'survey' ? "active" : ''}" href="/goodM/survey/surList"><i class="fa-solid fa-list-check"></i></a>
-		<ol><a href="#list" class="btn btn-big" data-bs-toggle="collapse"><i class="far fa-list-alt"> ▼</i></a>
+		<a class="nav-link ${menu eq 'calendar' ? 'active' : ''}" href="/goodM/calendar/calendar"><i class="fa-solid fa-calendar-days"></i></a>
+		<a class="nav-link ${menu eq 'map' ? 'active' : ''}" href="/goodM/map/kakaoMap"><i class="fa-solid fa-map-location-dot"></i></a>
+		<a class="nav-link ${menu eq 'survey' ? 'active' : ''}" href="/goodM/survey/surList"><i class="fa-solid fa-list-check"></i></a>
+		<a href="#list" class="btn btn-big" data-bs-toggle="collapse"><i class="far fa-list-alt"> ▼</i></a>
+		<ol>
 			<li id="list" class="collapse">
 				<a href="/goodM/infoBoard/list?p=1&f=&q="><i class="fa-regular fa-rectangle-list"></i>정보</a><br>
 				<a href="/goodM/genBoard/list?p=1&f=&q="><i class="fa-regular fa-rectangle-list"></i>자유</a>
@@ -34,7 +35,6 @@
 					<a href="/goodM/infoBoard/list?p=1&f=&q="><i class="fa-regular fa-rectangle-list"></i>    심리건강정보 게시판</a><br>
 					<a href="/goodM/genBoard/list?p=1&f=&q="><i class="fa-regular fa-rectangle-list"></i>     자유게시판</a>
 				</li>
-			</li>
 			<li><a href="/goodM/survey/surList"><i class="fa-solid fa-list-check"></i>  자가진단 테스트</a></li>
         <c:choose>
 			  <c:when test="${uid == 'admin'}">

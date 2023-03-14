@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.entity.SchDay;
 import com.example.demo.entity.Schedule;
-import com.example.demo.service.AnniversaryService;
 import com.example.demo.service.SchedUtil;
 import com.example.demo.service.ScheduleService;
 
@@ -29,7 +28,6 @@ import com.example.demo.service.ScheduleService;
 public class ScheduleController {
 	
 	@Autowired private SchedUtil schedUtil;
-	@Autowired private AnniversaryService annivService;
 	@Autowired private ScheduleService schedService;
 	
 	@GetMapping(value = {"/calendar/{arrow}", "/calendar"})

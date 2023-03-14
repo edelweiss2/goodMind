@@ -9,7 +9,7 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ExceptionHadlingController implements ErrorController {
@@ -17,7 +17,7 @@ public class ExceptionHadlingController implements ErrorController {
 	private final String ERROR_500_PAGE_PATH = "error/error500";
 	private final String ERROR_ETC_PAGE_PATH = "error/error";
 
-	@RequestMapping(value = "/error")
+	@GetMapping(value = "/error")
 	public String handleError(HttpServletRequest req, Model model) {
 
 		// 에러 코드를 획득한다.
@@ -25,11 +25,12 @@ public class ExceptionHadlingController implements ErrorController {
 
 		// 에러 코드에 대한 상태 정보
 		HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(status.toString()));
-        
+	    
 		if (status != null) {
 			// HttpStatus와 비교해 페이지 분기를 나누기 위한 변수
 			int statusCode = Integer.valueOf(status.toString());
 
+			
 			// 로그로 상태값을 기록 및 출력
 //			logger.info("httpStatus : " + statusCode);
 

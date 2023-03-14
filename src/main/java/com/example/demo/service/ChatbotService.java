@@ -48,7 +48,6 @@ public class ChatbotService {
 			wr.close();
 			int responseCode = con.getResponseCode();
 
-			BufferedReader br;
 			
 			System.out.println("셋");
 			if (responseCode == 200) { // Normal call

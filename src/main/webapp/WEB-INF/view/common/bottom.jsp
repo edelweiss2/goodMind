@@ -19,11 +19,13 @@
                 <dd><a href="#">admin@goodM.com</a></dd>
             </dl>
             <ul class="icons" id="bottom-icons">
-                <a class="me-2 black" href="#"><i class="fa-brands fa-square-twitter"></i></a>
-                <a class="me-2 black" href="#"><i class="fa-brands fa-square-facebook"></i></a>
-                <a class="me-2 black" href="#"><i class="fa-brands fa-square-instagram"></i></a>
-                <a class="me-2 black" href="#"><i class="fa-brands fa-square-github"></i></a>
-                <a class="me-2 black" href="#"><i class="fa-brands fa-instagram"></i></a>
+            	<li>
+	                <a href="#" class="me-2 black"><i class="fa-brands fa-square-twitter"></i></a>
+	                <a href="#" class="me-2 black"><i class="fa-brands fa-square-facebook"></i></a>
+	                <a href="#" class="me-2 black"><i class="fa-brands fa-square-instagram"></i></a>
+	                <a href="#" class="me-2 black"><i class="fa-brands fa-square-github"></i></a>
+	                <a href="#" class="me-2 black"><i class="fa-brands fa-instagram"></i></a>
+            	</li>
             </ul>
         </section>
         <p class="copyright" style="color:rgba(15, 1, 1, 0.484)">Copyright &copy; 2023 멀캠가네 둘째조 Corp. All rights reserved.</p>

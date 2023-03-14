@@ -11,7 +11,6 @@ import com.example.demo.dao.DiaryBoardDao;
 import com.example.demo.entity.Anniversary;
 import com.example.demo.entity.DiaryBoard;
 import com.example.demo.entity.DiaryDay;
-import com.example.demo.entity.SchDay;
 
 @Service
 public class DiaryServiceImpl implements DiaryService {

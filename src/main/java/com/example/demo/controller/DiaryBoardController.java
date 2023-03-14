@@ -135,10 +135,6 @@ public class DiaryBoardController {
 	@GetMapping("/detail")
 	public String detail(HttpServletRequest req, Model model) {
 		int did = Integer.parseInt(req.getParameter("did"));
-		String uid = req.getParameter("uid");
-		String option = req.getParameter("option");
-		HttpSession session = req.getSession();
-		String sessionUid = (String) session.getAttribute("uid");
 		DiaryBoard diaryBoard = diaryBoardService.getDiaryBoard(did);
 		String jsonFiles = diaryBoard.getFiles();
 		if (!(jsonFiles == null || jsonFiles.equals(""))) {
