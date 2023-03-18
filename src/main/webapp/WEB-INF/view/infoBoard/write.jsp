@@ -5,8 +5,8 @@
 
 <head>
     <%@ include file="../common/top.jsp" %>
-        <%@ include file="../common/heading.jsp" %>
-            <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+    <%@ include file="../common/heading.jsp" %>
+    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
 </head>
 
 <body>
