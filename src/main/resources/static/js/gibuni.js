@@ -16,6 +16,7 @@ $(function () {
         /* 입력란 비우기*/
         $('#message').val('');
     }); // submit 끝
+    
     // 별도의 ajax 생성
     function callAjax() {
         $.ajax({
