@@ -201,8 +201,7 @@ function pagination() {
 
 function addMarker(coords, searchList) {
     var markerImageSrc = '';
-    var markerImageSize = new kakao.maps.Size(30, 44);
-   
+    var markerImageSize = new kakao.maps.Size(30, 44);   
     
     // orgType 값에 따라 마커 이미지를 지정합니다.
     if (searchList.type === '중독관리통합지원센터' || searchList.type === '기초정신건강복지센터' ||
@@ -225,8 +224,7 @@ function addMarker(coords, searchList) {
     var marker = new kakao.maps.Marker({
         position: coords,
         image: markerImage        
-    });	
-    
+    });	    
  	
     marker.setMap(map);
     markers.push(marker);
